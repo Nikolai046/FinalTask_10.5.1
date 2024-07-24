@@ -1,55 +1,14 @@
 ﻿using System;
 
-interface ICalculator
-{
-    double Add(double a, double b);
-}
-
-interface ILogger
-{
-    void LogInfo(string message);
-    void LogError(string message);
-}
-
-class Calculator : ICalculator
-{
-    private readonly ILogger _logger;
-
-    public Calculator(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    public double Add(double a, double b)
-    {
-        double result = a + b;
-        _logger.LogInfo($"Выполнено сложение: {a} + {b} = {result}");
-        return result;
-    }
-}
-
-class ConsoleLogger : ILogger
-{
-    public void LogInfo(string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"INFO: {message}");
-        Console.ResetColor();
-    }
-
-    public void LogError(string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"ERROR: {message}");
-        Console.ResetColor();
-    }
-}
-
 class Program
 {
-    static void Main(string[] args)
+    /// <summary>
+    /// Точка входа в программу. Инициализирует калькулятор, запрашивает ввод чисел,
+    /// выполняет сложение и обрабатывает возможные исключения.
+    /// </summary>
+    static void Main()
     {
-        ILogger logger = new ConsoleLogger();
+        ILogger logger = new Logger();
         ICalculator calculator = new Calculator(logger);
 
         try
